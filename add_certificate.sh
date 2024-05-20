@@ -2,23 +2,11 @@
 #
 # Use this script to update your GitHub Actions Runner's Host to use custom SSL Certificates from GitHub Enterprise appliance.
 
-# Function to display a progress indicator
-show_progress() {
-    local -r pid="$1"
-    local -r delay='0.75'
-    local spinstr='|/-\\'
-    echo -n "Retrieving certificate, please wait... "
-    tput civis  # Hide cursor
-    while ps -p "$pid" > /dev/null 2>&1; do
-        local temp=${spinstr#?}
-        printf " [%c]  " "$spinstr"
-        spinstr=$temp${spinstr%"$temp"}
-        sleep $delay
-        printf "\b\b\b\b\b\b"
-    done
-    tput cnorm  # Show cursor
-    echo "Done"
-}
+# Check if the script is run as root
+if [[ $EUID -ne 0 ]]; then
+   echo -e "\e[31mThis script must be run as root. Use sudo.\e[0m" 
+   exit 1
+fi
 
 # Read Hostname
 echo ""
@@ -27,8 +15,8 @@ read -r host
 
 # Grab certificate and store in /tmp 
 echo ""
+echo -e "\e[32mRetrieving certificate. Please Stand By...\e[0m"
 openssl s_client -connect $host:443 -servername $host | openssl x509 -out /tmp/$host.pem
-show_progress $!
 
 # Detect OS
 os=$(grep -Eo '^(ID_LIKE|ID)=[a-zA-Z]+' /etc/os-release | cut -d= -f2)
