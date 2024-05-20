@@ -3,7 +3,9 @@
 # Use this script to update your GitHub Actions Runner's Host to use custom SSL Certificates from GitHub Enterprise appliance.
 
 # Read Hostname
+echo ""
 echo "Name of the HOST the certificate is for? (git.example.com)"
+echp ""
 read -r $host
 
 # Grab certificate and store in /tmp 
@@ -32,4 +34,5 @@ case "$os" in
         ;;
 esac
 
+echo ""
 echo "Certificate for $host has been added to the OS certificate store."
