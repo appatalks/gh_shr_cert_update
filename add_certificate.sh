@@ -5,7 +5,7 @@
 # Read Hostname
 echo ""
 echo "Name of the HOST the certificate is for? (git.example.com)"
-echp ""
+echo ""
 read -r $host
 
 # Grab certificate and store in /tmp 
