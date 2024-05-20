@@ -24,7 +24,7 @@ os=$(grep -Eo '^(ID_LIKE|ID)=[a-zA-Z]+' /etc/os-release | cut -d= -f2)
 # Update certificate store based on OS
 case "$os" in
     "ubuntu"|"debian"|"linuxmint")
-        sudo cp /tmp/$host.pem /usr/local/share/ca-certificates/
+        sudo cp /tmp/$host.pem /etc/ssl/certs/
         sudo update-ca-certificates
         ;;
     "fedora"|"centos"|"rhel"|"redhat")
