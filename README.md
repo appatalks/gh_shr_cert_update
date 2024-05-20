@@ -1,5 +1,15 @@
-# gh_shr_cert_update
+# GitHub Self-Hosted Runner Certificate Update (gh_shr_cert_update)
 Getting around "Disabling TLS certificate verification" for GitHub Self-Hosted Runners
+
+## Usage
+
+To use this script, you can download and execute it with the following command:
+
+```bash
+curl -s https://raw.githubusercontent.com/appatalks/gh_shr_cert_update/main/add_certificate.sh -O add_certificate.sh; chmod +x add_certificate.sh; sudo bash add_certificate.sh
+```
+
+----
 
 There is probablly a better way to impliment this, and that's what this aim's to do.
 
