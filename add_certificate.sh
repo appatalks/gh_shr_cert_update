@@ -2,14 +2,33 @@
 #
 # Use this script to update your GitHub Actions Runner's Host to use custom SSL Certificates from GitHub Enterprise appliance.
 
+# Function to display a progress indicator
+show_progress() {
+    local -r pid="$1"
+    local -r delay='0.75'
+    local spinstr='|/-\\'
+    echo -n "Retrieving certificate, please wait... "
+    tput civis  # Hide cursor
+    while ps -p "$pid" > /dev/null 2>&1; do
+        local temp=${spinstr#?}
+        printf " [%c]  " "$spinstr"
+        spinstr=$temp${spinstr%"$temp"}
+        sleep $delay
+        printf "\b\b\b\b\b\b"
+    done
+    tput cnorm  # Show cursor
+    echo "Done"
+}
+
 # Read Hostname
 echo ""
-echo "Name of the HOST the certificate is for? (git.example.com)"
-echo ""
-read -r $host
+echo -e "\e[32mName of the HOST the certificate is for? (git.example.com)\e[0m"
+read -r host
 
 # Grab certificate and store in /tmp 
+echo ""
 openssl s_client -connect $host:443 -servername $host | openssl x509 -out /tmp/$host.pem
+show_progress $!
 
 # Detect OS
 os=$(grep -Eo '^(ID_LIKE|ID)=[a-zA-Z]+' /etc/os-release | cut -d= -f2)
@@ -35,4 +54,4 @@ case "$os" in
 esac
 
 echo ""
-echo "Certificate for $host has been added to the OS certificate store."
+echo -e "\e[32mCertificate for $host has been added to the OS certificate store.\e[0m"
