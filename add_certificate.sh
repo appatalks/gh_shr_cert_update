@@ -1,6 +1,6 @@
 # !/bin/bash
 #
-# Use this script to update your GitHub Actions Runner's Host to use custom SSL Certificates from GitHub Enterprise appliance.
+# Run this script from the Runner's installation to update your Runner's Host to use custom SSL Certificates from GitHub Enterprise appliance.
 
 # Check if the script is run as root
 if [[ $EUID -ne 0 ]]; then
