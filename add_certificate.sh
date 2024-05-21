@@ -25,14 +25,17 @@ os=$(grep -Eo '^(ID_LIKE|ID)=[a-zA-Z]+' /etc/os-release | cut -d= -f2)
 case "$os" in
     "ubuntu"|"debian"|"linuxmint")
         sudo cp /tmp/$host.pem /etc/ssl/certs/
+        sudo echo "NODE_EXTRA_CA_CERTS=/etc/ssl/certs/$host.pem" >> .env
         sudo update-ca-certificates
         ;;
     "fedora"|"centos"|"rhel"|"redhat")
         sudo cp /tmp/$host.pem /etc/pki/ca-trust/source/anchors/
+        sudo echo "NODE_EXTRA_CA_CERTS=/etc/pki/ca-trust/source/anchors/$host.pem" >> .env
         sudo update-ca-trust
         ;;
     "suse"|"opensuse")
         sudo cp /tmp/$host.pem /etc/pki/trust/anchors/
+        sudo echo "NODE_EXTRA_CA_CERTS=/etc/pki/trust/anchors/$host.pem" >> .env
         sudo update-ca-certificates
         ;;
     *)
