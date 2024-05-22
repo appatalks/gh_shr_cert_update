@@ -20,7 +20,8 @@ fi
 
 # Check if .credentials exists, thus self-hosted runner has been initialzed.  
 if [[ ! -f ".credentials" ]]; then
-    echo -e "\e[31m.credentials file not found in the current directory. Please check path or run config.sh to initilize runner first.\e[0m"
+    echo ""
+    echo -e "\e[31m.credentials file not found in the current directory. Run config.sh to initilize runner.\e[0m"
     GHE_HOSTNAME="git.example.com"
 else
     # Extract the authorizationUrl from .credentials
@@ -30,7 +31,7 @@ fi
 
 # Confirm hostname with the user
 echo ""
-echo -e "\e[32mThe hostname from backup.config is: $GHE_HOSTNAME\e[0m"
+echo -e "\e[32mThe extracted hostname is: $GHE_HOSTNAME\e[0m"
 echo -e "\e[32mIs this correct? (y/n)\e[0m"
 read -r confirm
 
