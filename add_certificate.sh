@@ -8,20 +8,24 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-# Check if backup.config exists
+# Check if backup.config exists in the event this ran for backup-utils
 if [[ ! -f "backup.config" ]]; then
-    echo -e "\e[31mbackup.config file not found in the current directory. Check path.\e[0m"
-    exit 1
+    echo ""
+    echo -e "\e[31mbackup.config file not found in the current directory. Not Backup-Utils.\e[0m"
+    GHE_HOSTNAME="git.example.com"
+else
+    # Read the hostname from backup.config
+    source backup.config
 fi
 
-# Read the hostname from backup.config
-source backup.config
-
-# Check if GHE_HOSTNAME is set
-if [[ -z "$GHE_HOSTNAME" ]]; then
-    echo ""
-    echo -e "\e[31mPlease remember to set GHE_HOSTNAME variable in backup.config.\e[0m"
+# Check if .credentials exists, thus self-hosted runner has been initialzed.  
+if [[ ! -f ".credentials" ]]; then
+    echo -e "\e[31m.credentials file not found in the current directory. Please check path or run config.sh to initilize runner first.\e[0m"
     GHE_HOSTNAME="git.example.com"
+else
+    # Extract the authorizationUrl from .credentials
+    authorizationUrl=$(jq -r '.data.authorizationUrl' .credentials)
+    GHE_HOSTNAME=$(echo "$authorizationUrl" | awk -F[/:] '{print $4}')
 fi
 
 # Confirm hostname with the user
