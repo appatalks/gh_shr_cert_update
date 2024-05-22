@@ -19,6 +19,7 @@ source backup.config
 
 # Check if GHE_HOSTNAME is set
 if [[ -z "$GHE_HOSTNAME" ]]; then
+    echo ""
     echo -e "\e[31mPlease remember to set GHE_HOSTNAME variable in backup.config.\e[0m"
     GHE_HOSTNAME="git.example.com"
 fi
