@@ -12,7 +12,7 @@ fi
 if [[ ! -f "backup.config" ]]; then
     echo ""
     echo -e "\e[31mbackup.config file not found in the current directory. Not Backup-Utils.\e[0m"
-    GHE_HOSTNAME="git.example.com"
+    # GHE_HOSTNAME="git.example.com"
 else
     # Read the hostname from backup.config
     echo ""
