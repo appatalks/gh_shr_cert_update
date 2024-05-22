@@ -15,6 +15,8 @@ if [[ ! -f "backup.config" ]]; then
     GHE_HOSTNAME="git.example.com"
 else
     # Read the hostname from backup.config
+    echo ""
+    echo "\e[32mReading backup.config from Backup-Utils...\e[0m"
     source backup.config
 fi
 
@@ -25,6 +27,8 @@ if [[ ! -f ".credentials" ]]; then
     GHE_HOSTNAME="git.example.com"
 else
     # Extract the authorizationUrl from .credentials
+    echo ""
+    echo "\e[32mReading Runner Configuration...\e[0m"
     authorizationUrl=$(jq -r '.data.authorizationUrl' .credentials)
     GHE_HOSTNAME=$(echo "$authorizationUrl" | awk -F[/:] '{print $4}')
 fi
