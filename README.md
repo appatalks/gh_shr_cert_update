@@ -10,5 +10,9 @@ To use this script, download it your your Runner's Path and execute it with the 
 curl -s https://raw.githubusercontent.com/appatalks/gh_shr_cert_update/main/add_certificate.sh -O add_certificate.sh; chmod +x add_certificate.sh; sudo bash add_certificate.sh
 ```
 
+<br>
+
+Follow the instructions. <br> When it completes it will add the needed SSL to the correct path and add additional variables to the Runner's ```.env``` file.
+
 ----
 
