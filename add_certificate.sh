@@ -10,9 +10,7 @@ fi
 
 # Check if backup.config exists
 if [[ ! -f "backup.config" ]]; then
-    echo ""
     echo -e "\e[31mbackup.config file not found in the current directory. Check path.\e[0m"
-    echo ""
     exit 1
 fi
 
